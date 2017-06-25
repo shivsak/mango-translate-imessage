@@ -13,10 +13,7 @@ class TranslateApi {
     let ROOT_URL = "https://quiet-woodland-92550.herokuapp.com"
     
     func translate(string:String, targetLanguage:String, onSuccess:@escaping ((String) -> Void), onFailure: @escaping ((Error) -> Void)) {
-        print("Translate \(string) to \(targetLanguage)")
-        
         let url = URL(string: "\(ROOT_URL)/translate/\(targetLanguage)")
-        print("\n\n \(url!)")
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         let payloadString: String = "{\"text\": \"\(string)\"}"

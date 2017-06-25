@@ -62,6 +62,7 @@ class LanguagePickerCell: UICollectionViewCell {
 
 class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
     
+    private let BUTTON_HEIGHT = 50
     private let cellReuseIdentifier = "LanguagePickerCell"
     private let languageList = [
         Language(name:"English",
@@ -100,7 +101,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         height: 200
     ), collectionViewLayout: UICollectionViewLayout.init())
     private var doneButton:UIButton = UIButton.init()
-    private var sendButton:UIButton = UIButton.init()
+    private var clearButton:UIButton = UIButton.init()
     private var languageSelectButton:UIButton = UIButton.init()
     private var containerView: UIView = UIView.init()
     
@@ -177,6 +178,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     func setupView() {
         setupContainerView()
         setupTextView()
+        setupClearButton()
         setupDoneButton()
         setupLanguageSelectButton()
         setupLanguagePickerBackgroundView()
@@ -243,18 +245,38 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     
     func setupDoneButton() {
         doneButton = UIButton(frame: CGRect(
-            x: 10,
+            x: (containerView.frame.size.width + 5)/2,
             y: 20,
-            width: containerView.frame.size.width - 20,
+            width: (containerView.frame.size.width - 20)/2,
             height: 50
         ))
-        doneButton.backgroundColor = UIColor.purple.withAlphaComponent(0.4)
+        doneButton.backgroundColor = UIColor.blue.withAlphaComponent(0.6)
         doneButton.layer.cornerRadius = 5.0
         doneButton.setTitle("Done", for: .normal)
         doneButton.isHidden = true
         doneButton.addTarget(self, action:#selector(doneButtonPressed), for: .touchUpInside)
         
         containerView.addSubview(doneButton)
+    }
+    
+    func setupClearButton() {
+        clearButton = UIButton(frame: CGRect(
+            x: 15/2,
+            y: 20,
+            width: (containerView.frame.size.width - 20)/2,
+            height: 50
+        ))
+        clearButton.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        clearButton.layer.cornerRadius = 5.0
+        clearButton.setTitle("Clear", for: .normal)
+        clearButton.isHidden = true
+        clearButton.addTarget(self, action:#selector(clearButtonPressed), for: .touchUpInside)
+        
+        containerView.addSubview(clearButton)
+    }
+    
+    func clearButtonPressed() {
+        textView.text = ""
     }
     
     func hideLanguagePicker() {
@@ -270,7 +292,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
             x:10,
             y:50,
             width:containerView.frame.size.width - 20,
-            height: 150))
+            height: 100))
         textView.font = UIFont(name: "HelveticaNeue-Light", size: 18.0)
         textView.textColor = UIColor.black.withAlphaComponent(0.65)
         textView.backgroundColor = UIColor.black.withAlphaComponent(0.08)
@@ -287,12 +309,6 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         let tap = UITapGestureRecognizer(target: self, action: #selector(expandView(_:)))
         tap.delegate = self
         textView.addGestureRecognizer(tap)
-    }
-    
-    func setupDoneButtonGestureRecognizer() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doneButtonPressed(_:)))
-        tap.delegate = self
-        doneButton.addGestureRecognizer(tap)
     }
     
     func expandView(_ sender:AnyObject) {
@@ -380,7 +396,6 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     }
     
     func willSwitchToCompactView() {
-        print("\n\n\ncompacting\n\n\n")
         
         // adjust text field
         adjustTextView(pres: .compact)
@@ -390,16 +405,13 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         
         // hide done button
         doneButton.isHidden = true
-        
-        // show send button
-        sendButton.isHidden = false
+        clearButton.isHidden = true
         
         // show language select button
         languageSelectButton.isHidden = false
     }
     
     func willSwitchToExpandedView() {
-        print("\n\n\nexpanding\n\n\n")
         
         // adjust text field
         adjustTextView(pres: .expanded)
@@ -409,9 +421,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         
         // show done button
         doneButton.isHidden = false
-        
-        // show send button
-        sendButton.isHidden = true
+        clearButton.isHidden = false
         
         // hide language select button
         languageSelectButton.isHidden = true
@@ -450,7 +460,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
                 x:10,
                 y:50,
                 width:containerView.frame.size.width - 20,
-                height: 120
+                height: 100
             )
             
         } else {
