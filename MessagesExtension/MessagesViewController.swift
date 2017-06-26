@@ -8,12 +8,22 @@
 
 import UIKit
 import Messages
+import Smile
+
+extension Dictionary {
+    init(_ pairs: [Element]) {
+        self.init()
+        for (k, v) in pairs {
+            self[k] = v
+        }
+    }
+}
 
 struct Language {
     
     var name:String = ""
     var code:String = ""
-    var icon:String = ""
+    var icon:String?
     
 }
 
@@ -39,7 +49,7 @@ class LanguagePickerCell: UICollectionViewCell {
         nameLabel = UILabel(frame: CGRect(
             x:40,
             y:10,
-            width:70,
+            width:self.frame.size.width - 40,
             height:30
         ))
         nameLabel.font = UIFont(name: "HelveticaNeue", size: 16)
@@ -55,7 +65,7 @@ class LanguagePickerCell: UICollectionViewCell {
             width:25,
             height:30
         ))
-        iconLabel.text = "😀"
+        iconLabel.text = ""
         contentView.addSubview(iconLabel)
     }
 }
@@ -64,31 +74,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     
     private let BUTTON_HEIGHT = 50
     private let cellReuseIdentifier = "LanguagePickerCell"
-    private let languageList = [
-        Language(name:"English",
-                 code: "en",
-                 icon: ""),
-        Language(name:"French",
-                 code: "fr",
-                 icon: ""),
-        Language(name:"Spanish",
-                 code: "es",
-                 icon: ""),
-        Language(name:"Hindi",
-                 code: "hi",
-                 icon: ""),
-        Language(name:"Italian",
-                 code: "it",
-                 icon: ""),
-        Language(name:"German",
-                 code: "ge",
-                 icon: ""),
-        Language(name:"Russian",
-                 code: "ru",
-                 icon: ""),
-        
-    ]
-    
+    private var languageList: [Language] = []
     private var selectedLanguage: Language = Language(name:"English", code: "en", icon: "")
     
     // UI
@@ -98,19 +84,89 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         x: 0,
         y: 0,
         width: 200,
-        height: 200
+        height: 120
     ), collectionViewLayout: UICollectionViewLayout.init())
     private var doneButton:UIButton = UIButton.init()
     private var clearButton:UIButton = UIButton.init()
+    private var translatingToInfoLabel:UILabel = UILabel.init()
     private var languageSelectButton:UIButton = UIButton.init()
     private var containerView: UIView = UIView.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setAllowedLanguages()
         checkInternet()
         setupView()
         
+    }
+    
+    func setAllowedLanguages() {
+        if let languages = readLanguagesJson() {
+            languageList = languages.sorted(by: { $0.name < $1.name })
+        } else {
+            logError(error: "Could not get list of languages from languages.json")
+        }
+    }
+    
+    private func readLanguagesJson() -> [Language]? {
+        do {
+            if let file = Bundle.main.url(forResource: "languages", withExtension: "json") {
+                var languages:[Language] = []
+                let data = try Data(contentsOf: file)
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                if let object = json as? [String: String] {
+                    for key in object.keys {
+                        if let languageName = object[key] {
+                            let lang = Language(name:languageName, code:key, icon:self.getIconFromCode(code:key))
+                            languages.append(lang)
+                        }
+                    }
+                    return languages
+                }
+                else {
+                    print("JSON is invalid")
+                }
+            } else {
+                print("languages.json file not found")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    func getIconFromCode(code:String) -> String {
+        let smileEmoji = Smile.emoji(countryCode: code)
+        
+        if (code == "hi") {
+            print("smile emoji for hindi is \(smileEmoji)")
+        }
+        if (smileEmoji.characters.count == 1) {
+            return smileEmoji
+        }
+        else if (smileEmoji.characters.count == 2) {
+            let index = smileEmoji.index(smileEmoji.startIndex, offsetBy: 1)
+            return smileEmoji.substring(to: index)
+        }
+        else {
+            switch code {
+            case "en":
+                // English
+                return Smile.emoji(countryCode: "us")
+            case "hi":
+                // Hindi
+                return Smile.emoji(countryCode: "in")
+            case "el":
+                // Greek
+                return Smile.emoji(countryCode: "gr")
+            case "haw":
+                // Hawaian
+                return Smile.emoji(countryCode: "us")
+            default:
+                return "😁"
+            }
+        }
     }
     
     func checkInternet() {
@@ -150,15 +206,17 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         print("\n\n\nselected item at index \(indexPath.row)\n\n\n")
         selectedLanguage = languageList[indexPath.row]
         hideLanguagePicker()
+        updateLanguageSelected()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // cell for item
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! LanguagePickerCell
-        
         let language = languageList[indexPath.row % languageList.count]
+        
         cell.nameLabel.text = language.name
+        cell.iconLabel.text = language.icon
         cell.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         cell.layer.cornerRadius = 6
         cell.layer.masksToBounds = true
@@ -181,6 +239,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         setupClearButton()
         setupDoneButton()
         setupLanguageSelectButton()
+        setupTranslatingToInfoLabel()
         setupLanguagePickerBackgroundView()
         setupLanguagePickerCollectionView()
         
@@ -198,10 +257,10 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         languageSelectButton = UIButton.init(frame: CGRect(
             x:10,
             y:10,
-            width: 30,
+            width: 40,
             height: 30
         ))
-        languageSelectButton.setTitle("en", for: .normal)
+        languageSelectButton.setTitle("\(selectedLanguage.code)", for: .normal)
         languageSelectButton.backgroundColor = UIColor.blue.withAlphaComponent(0.4);
         languageSelectButton.layer.cornerRadius = 4
         languageSelectButton.addTarget(self, action: #selector(showLanguagePicker), for: .touchUpInside)
@@ -209,10 +268,16 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
         
     }
     
+    func updateLanguageSelected() {
+        languageSelectButton.setTitle(selectedLanguage.code, for: .normal)
+        setAttributedInfoString()
+    }
+    
     func setupLanguagePickerCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-        layout.itemSize = CGSize(width: 120, height: 50)
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: 150, height: 50)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         
@@ -223,9 +288,11 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
             height: languagePickerBackgroundView.frame.size.height
         ), collectionViewLayout: layout)
         languagePickerCollectionView.register(LanguagePickerCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
-        
         languagePickerCollectionView.backgroundColor = UIColor.black
+        languagePickerCollectionView.layer.cornerRadius = 5
         languagePickerCollectionView.tintColor = UIColor.white
+        languagePickerCollectionView.isScrollEnabled = true
+        languagePickerCollectionView.alwaysBounceVertical = true
         languagePickerCollectionView.isUserInteractionEnabled = true
         languagePickerCollectionView.delegate = self
         languagePickerCollectionView.dataSource = self
@@ -233,14 +300,41 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     }
 
     func setupLanguagePickerBackgroundView() {
-        languagePickerBackgroundView = UIPickerView(frame: CGRect(
+        languagePickerBackgroundView = UIView(frame: CGRect(
             x:0,
             y:0,
             width: containerView.frame.size.width,
-            height: 300
+            height: 200
         ))
-        languagePickerBackgroundView.backgroundColor = UIColor.black
+        languagePickerBackgroundView.backgroundColor = UIColor.clear
         containerView.addSubview(languagePickerBackgroundView)
+    }
+    
+    func setupTranslatingToInfoLabel() {
+        translatingToInfoLabel = UILabel(frame:
+            CGRect(
+                x:60,
+                y: 10,
+                width:containerView.frame.size.width - 20,
+                height:30
+            )
+        )
+        
+        translatingToInfoLabel.textColor = UIColor.lightGray
+        translatingToInfoLabel.font = UIFont(name: "HelveticaNeue", size: 12.0)
+        // create attributed string
+        setAttributedInfoString()
+        translatingToInfoLabel.isHidden = false
+        containerView.addSubview(translatingToInfoLabel)
+    }
+    
+    func setAttributedInfoString() {
+        let infoString = "translating to \(selectedLanguage.name)"
+        let range = NSRange(location: infoString.characters.count - selectedLanguage.name.characters.count, length: selectedLanguage.name.characters.count)
+        let myMutableString = NSMutableAttributedString(string: infoString, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 13.0)!])
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blue.withAlphaComponent(0.5), range: range)
+        // set label Attribute
+        translatingToInfoLabel.attributedText = myMutableString
     }
     
     func setupDoneButton() {
@@ -387,7 +481,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     }
     
     func fetchTranslation(stringToTranslate:String) {
-        print(TranslateApi.init().translate(string: stringToTranslate, targetLanguage: "fr", onSuccess: {(translatedText) -> Void in
+        print(TranslateApi.init().translate(string: stringToTranslate, targetLanguage: "\(selectedLanguage.code)", onSuccess: {(translatedText) -> Void in
                 self.composeMessage(text: translatedText)
                 print(" \n\n\n translated text is:\n \(translatedText)")
         }, onFailure: {(error) -> Void in
@@ -396,11 +490,6 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     }
     
     func willSwitchToCompactView() {
-        
-        // adjust text field
-        adjustTextView(pres: .compact)
-        
-        // show language to button
         
         
         // hide done button
@@ -412,9 +501,6 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     }
     
     func willSwitchToExpandedView() {
-        
-        // adjust text field
-        adjustTextView(pres: .expanded)
         
         // hide language to button and picker
         hideLanguagePicker()
@@ -429,14 +515,38 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
     
     
     func didSwitchToExpandedView() {
-        //modify containerView
         adjustContainerView(pres: .expanded)
+        adjustTextView(pres: .expanded)
+        adjustTranslatingToInfoLabel(pres: .expanded)
         textView.isEditable = true
     }
     
     func didSwitchToCompactView() {
         adjustContainerView(pres: .compact)
+        adjustTextView(pres: .compact)
+        adjustTranslatingToInfoLabel(pres: .compact)
         textView.isEditable = false
+    }
+    
+    func adjustTranslatingToInfoLabel(pres: MSMessagesAppPresentationStyle) {
+        if (pres == .compact) {
+            translatingToInfoLabel.isHidden = false
+            translatingToInfoLabel.frame = CGRect(
+                x:60,
+                y: 10,
+                width:containerView.frame.size.width - 20,
+                height:30
+            )
+        }
+        else {
+            translatingToInfoLabel.isHidden = false
+            translatingToInfoLabel.frame = CGRect(
+                x:10,
+                y: textView.frame.origin.y + textView.frame.size.height + 10,
+                width:containerView.frame.size.width - 20,
+                height:30
+            )
+        }
     }
     
     func adjustContainerView(pres: MSMessagesAppPresentationStyle) {
