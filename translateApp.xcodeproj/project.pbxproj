@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DDE8CFE12290D970BB81CC0 /* Pods_translateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED01DB6E4F7073F4DC7845F7 /* Pods_translateApp.framework */; };
+		D5C3B01DAC0B85ADFDAD7BCE /* Pods_MessagesExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC90A9095063809C4BEC006 /* Pods_MessagesExtension.framework */; };
 		F63784071EFE2B2A0012B069 /* TranslateApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63784061EFE2B2A0012B069 /* TranslateApi.swift */; };
 		F637840A1EFE37730012B069 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63784091EFE37730012B069 /* Reachability.swift */; };
 		F637840D1EFE38870012B069 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F637840C1EFE38870012B069 /* NetworkExtension.framework */; };
@@ -16,6 +18,7 @@
 		F6A917121EFDE4740064AF0E /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A917111EFDE4740064AF0E /* MessagesViewController.swift */; };
 		F6A917151EFDE4740064AF0E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6A917131EFDE4740064AF0E /* MainInterface.storyboard */; };
 		F6A917171EFDE4740064AF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6A917161EFDE4740064AF0E /* Assets.xcassets */; };
+		F6C657AA1F00405A0015D84A /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = F6C657A91F00405A0015D84A /* languages.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0CC90A9095063809C4BEC006 /* Pods_MessagesExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MessagesExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C89B79DD4F18C70AE3A62FE /* Pods-translateApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-translateApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-translateApp/Pods-translateApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5448551E06C538F242949D2B /* Pods-translateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-translateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-translateApp/Pods-translateApp.release.xcconfig"; sourceTree = "<group>"; };
+		944362F268A23109E5E366E7 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
+		A5E2CE984DE8123EE112C364 /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		ED01DB6E4F7073F4DC7845F7 /* Pods_translateApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_translateApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F63784061EFE2B2A0012B069 /* TranslateApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslateApi.swift; sourceTree = "<group>"; };
 		F63784091EFE37730012B069 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F637840B1EFE38790012B069 /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MessagesExtension.entitlements; sourceTree = "<group>"; };
@@ -56,15 +65,25 @@
 		F6A917141EFDE4740064AF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		F6A917161EFDE4740064AF0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6A917181EFDE4740064AF0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6C657A91F00405A0015D84A /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A964DC878BC69F26649D4E33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DDE8CFE12290D970BB81CC0 /* Pods_translateApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F6A917061EFDE4740064AF0E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F6A9170F1EFDE4740064AF0E /* Messages.framework in Frameworks */,
 				F637840D1EFE38870012B069 /* NetworkExtension.framework in Frameworks */,
+				D5C3B01DAC0B85ADFDAD7BCE /* Pods_MessagesExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +105,7 @@
 				F6A917101EFDE4740064AF0E /* MessagesExtension */,
 				F6A9170D1EFDE4740064AF0E /* Frameworks */,
 				F6A917001EFDE4740064AF0E /* Products */,
+				F8AB5FC6059A1982C82565C0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +132,8 @@
 			children = (
 				F637840C1EFE38870012B069 /* NetworkExtension.framework */,
 				F6A9170E1EFDE4740064AF0E /* Messages.framework */,
+				0CC90A9095063809C4BEC006 /* Pods_MessagesExtension.framework */,
+				ED01DB6E4F7073F4DC7845F7 /* Pods_translateApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,9 +147,29 @@
 				F63784081EFE37660012B069 /* Network */,
 				F6A917131EFDE4740064AF0E /* MainInterface.storyboard */,
 				F6A917161EFDE4740064AF0E /* Assets.xcassets */,
+				F6C657A91F00405A0015D84A /* languages.json */,
 				F6A917181EFDE4740064AF0E /* Info.plist */,
+				F6C657A81F0040360015D84A /* New Group */,
 			);
 			path = MessagesExtension;
+			sourceTree = "<group>";
+		};
+		F6C657A81F0040360015D84A /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		F8AB5FC6059A1982C82565C0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A5E2CE984DE8123EE112C364 /* Pods-MessagesExtension.debug.xcconfig */,
+				944362F268A23109E5E366E7 /* Pods-MessagesExtension.release.xcconfig */,
+				1C89B79DD4F18C70AE3A62FE /* Pods-translateApp.debug.xcconfig */,
+				5448551E06C538F242949D2B /* Pods-translateApp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +179,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F6A9171F1EFDE4740064AF0E /* Build configuration list for PBXNativeTarget "translateApp" */;
 			buildPhases = (
+				BD82DE3F03BBD94D32D3D41B /* [CP] Check Pods Manifest.lock */,
 				F6A916FD1EFDE4740064AF0E /* Resources */,
 				F6A9171E1EFDE4740064AF0E /* Embed App Extensions */,
+				A964DC878BC69F26649D4E33 /* Frameworks */,
+				7578EA4999F23DE3CD471132 /* [CP] Embed Pods Frameworks */,
+				CD20E48493B9AF90FAF93534 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -154,9 +200,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F6A9171B1EFDE4740064AF0E /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
 			buildPhases = (
+				FC72003491E89ED2F06951A0 /* [CP] Check Pods Manifest.lock */,
 				F6A917051EFDE4740064AF0E /* Sources */,
 				F6A917061EFDE4740064AF0E /* Frameworks */,
 				F6A917071EFDE4740064AF0E /* Resources */,
+				1BE6F39D59DC225D1F066737 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -229,12 +277,91 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6C657AA1F00405A0015D84A /* languages.json in Resources */,
 				F6A917171EFDE4740064AF0E /* Assets.xcassets in Resources */,
 				F6A917151EFDE4740064AF0E /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1BE6F39D59DC225D1F066737 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7578EA4999F23DE3CD471132 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-translateApp/Pods-translateApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD82DE3F03BBD94D32D3D41B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CD20E48493B9AF90FAF93534 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-translateApp/Pods-translateApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC72003491E89ED2F06951A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F6A917051EFDE4740064AF0E /* Sources */ = {
@@ -366,14 +493,19 @@
 		};
 		F6A9171C1EFDE4740064AF0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5E2CE984DE8123EE112C364 /* Pods-MessagesExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = P79GHWWSY3;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp.MessagesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp.messages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -381,14 +513,19 @@
 		};
 		F6A9171D1EFDE4740064AF0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 944362F268A23109E5E366E7 /* Pods-MessagesExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = P79GHWWSY3;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp.MessagesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp.messages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -396,26 +533,34 @@
 		};
 		F6A917201EFDE4740064AF0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C89B79DD4F18C70AE3A62FE /* Pods-translateApp.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = P79GHWWSY3;
 				INFOPLIST_FILE = translateApp/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		F6A917211EFDE4740064AF0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5448551E06C538F242949D2B /* Pods-translateApp.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = P79GHWWSY3;
 				INFOPLIST_FILE = translateApp/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shivsakhuja.translateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

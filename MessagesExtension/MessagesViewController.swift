@@ -30,6 +30,16 @@ struct Language {
 
 class LanguagePickerCell: UICollectionViewCell {
     
+    let colors = [
+        UIColor(colorLiteralRed: 0.2, green: 0.6, blue: 0.9, alpha: 1).withAlphaComponent(0.7),
+        UIColor(colorLiteralRed: 0.2, green: 1, blue: 0.7, alpha: 1).withAlphaComponent(0.7),
+        UIColor.green.withAlphaComponent(0.7),
+        UIColor.red.withAlphaComponent(0.6),
+        UIColor.yellow.withAlphaComponent(0.6),
+        UIColor.orange.withAlphaComponent(0.6),
+        UIColor.white.withAlphaComponent(0.6)
+    ]
+    
     var iconLabel: UILabel = UILabel()
     var nameLabel: UILabel = UILabel()
     
@@ -44,12 +54,17 @@ class LanguagePickerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func getRandomColor() -> UIColor {
+
+        return colors[Int(arc4random_uniform(UInt32(colors.count)))]
+    }
+    
     
     func setupNameLabel() {
         nameLabel = UILabel(frame: CGRect(
-            x:40,
+            x:50,
             y:10,
-            width:self.frame.size.width - 40,
+            width:self.frame.size.width - 50,
             height:30
         ))
         nameLabel.font = UIFont(name: "HelveticaNeue", size: 16)
@@ -62,10 +77,17 @@ class LanguagePickerCell: UICollectionViewCell {
         iconLabel = UILabel(frame: CGRect(
             x:10,
             y:10,
-            width:25,
+            width:30,
             height:30
         ))
+        let color = getRandomColor()
         iconLabel.text = ""
+        iconLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        iconLabel.textAlignment = .center
+        iconLabel.textColor = color
+        iconLabel.layer.cornerRadius = iconLabel.frame.size.width/2
+        iconLabel.layer.borderColor = color.cgColor
+        iconLabel.layer.borderWidth = 1
         contentView.addSubview(iconLabel)
     }
 }
@@ -118,7 +140,7 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
                 if let object = json as? [String: String] {
                     for key in object.keys {
                         if let languageName = object[key] {
-                            let lang = Language(name:languageName, code:key, icon:self.getIconFromCode(code:key))
+                            let lang = Language(name:languageName, code:key, icon:self.getFirstCharacter(str: languageName))
                             languages.append(lang)
                         }
                     }
@@ -167,6 +189,11 @@ class MessagesViewController: MSMessagesAppViewController, UITextViewDelegate, U
                 return "😁"
             }
         }
+    }
+    
+    func getFirstCharacter(str:String) -> String {
+        let index = str.index(str.startIndex, offsetBy: 1)
+        return str.substring(to: index)
     }
     
     func checkInternet() {
